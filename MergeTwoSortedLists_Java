@@ -1,4 +1,4 @@
-// Average Runtime - Beats 76% of all java submissions
+// Runtime, Beats = bestCase ? 99.7% : 75%.
 
 /**
  * Definition for singly-linked list.

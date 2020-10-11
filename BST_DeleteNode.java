@@ -17,6 +17,7 @@ class Solution {
     public TreeNode deleteNode(TreeNode root, int key) {
         if (root == null) return root;
         
+        // to make life easier, otherwise not really necessary
         TreeNode sentinel = new TreeNode(Integer.MIN_VALUE);
         sentinel.left = root;
         
@@ -25,8 +26,9 @@ class Solution {
         TreeNode delete = nodes[1];
              
         if (delete == null) return root; // not present
-        if (parent == null) parent = sentinel;
+        if (parent == null) parent = sentinel; // node to delete is root
         
+        // cover cases of no child or just one child
         if (delete.left == null || delete.right == null) {
             TreeNode replacement = null;
             if (delete.left != null) replacement = delete.left;
@@ -35,8 +37,10 @@ class Solution {
             if (parent.left == delete) parent.left = replacement;
             else parent.right = replacement;
         } else {
+            // both childs are present
             TreeNode replacement = predecessor(delete.left);
             delete.val = replacement.val;
+            // delete.left child is predecessor
             if (delete.left == replacement) {
                 delete.left = delete.left.left;
             }
@@ -45,6 +49,7 @@ class Solution {
         return sentinel.left;
     }
     
+    // returns deletion node and its parent
     private TreeNode[] search(TreeNode root, int val) {
         if (root == null) return null; // not required in context
         TreeNode prev = null;
@@ -58,6 +63,7 @@ class Solution {
         return new TreeNode[] {prev, root};
     }
     
+    // returns predecessor node and deletes it as well in case
     private TreeNode predecessor(TreeNode root) {
         if (root == null) return null; // not required in context
         TreeNode parent = null;
@@ -65,6 +71,7 @@ class Solution {
             parent = root;
             root = root.right;
         } 
+        // save from finding and deleting this predecessor later
         if (parent != null)
             parent.right = root.left;   
         
